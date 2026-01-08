@@ -1,0 +1,8 @@
+services:
+  kong-manager:
+    image: pantsel/konga:0.14.9
+    restart: always
+    env_file:
+      - ".env"
+    ports:
+      - "1337:1337"

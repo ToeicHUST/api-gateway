@@ -1,0 +1,7 @@
+services:
+  kong-migration:
+    image: kong:3.4
+    restart: "no"
+    env_file:
+      - ".env"
+    command: kong migrations bootstrap
