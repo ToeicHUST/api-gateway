@@ -1,6 +1,6 @@
 services:
   kong-migration:
-    image: kong:3.4
+    build: "./api"
     restart: "no"
     env_file:
       - ".env"
