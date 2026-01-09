@@ -1,0 +1,16 @@
+{
+  "name": "api-gateway",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "kong-import": "sh scripts/kong-import.sh",
+    "kong-export": "sh scripts/kong-export.sh",
+    "kong-credentials": "python scripts/kong-credentials.py",
+    "start:dev": "npm run kong-import && npm run kong-export && npm run kong-credentials"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

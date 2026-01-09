@@ -1,0 +1,39 @@
+name: Kong Configuration
+
+on:
+  push:
+    branches:
+      - main
+
+
+
+jobs:
+  deck-validate-and-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+
+
+      - name: Setup decK
+        uses: kong/setup-deck@v1
+        with:
+          deck-version: '1.55.0' 
+
+
+
+
+
+      - name: Validate Kong Config
+        run: deck validate -s kong.yaml
+
+
+
+#       - name: Diff Kong Config (Pull Request)
+#         if: github.event_name == 'pull_request'
+#         run: deck diff -s kong.yaml --kong-addr ${{ secrets.KONG_ADMIN_ADDR }}
+
+#       - name: Sync Kong Config (Merge)
+#         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+#         run: deck sync -s kong.yaml --kong-addr ${{ secrets.KONG_ADMIN_ADDR }}

@@ -1,3 +1,25 @@
+
+
+  curl -X POST http://localhost:8001/services \
+    --data name=kong-api-gateway \
+    --data url=http://localhost:8001
+
+  curl -X POST http://localhost:8001/services/kong-api-gateway/routes \
+    --data paths[]=/kong-api-gateway
+
+
+
+  curl -X POST http://localhost:8001/services/kong-api-gateway/plugins \
+    --data name=key-auth
+
+  curl -X POST http://localhost:8001/consumers \
+    --data username=kong-api-gateway
+
+  curl -X POST http://localhost:8001/consumers/kong-api-gateway/key-auth \
+    --data key=2026_01_07_23_44_56_737139NghialIlIlIlIl2002$python
+
+
+
 curl -i -X POST "http://localhost:8001/upstreams" \
     --data "name=jsonplaceholder-service-upstream"
 
@@ -17,4 +39,11 @@ curl -i -s -X POST "http://localhost:8001/services/jsonplaceholder-service/route
 
 # http://localhost:8000/api/jsonplaceholder-service/posts
 # http://localhost:8000/api/jsonplaceholder-service/users
+
+
+# https://api.toeichust.me/api/jsonplaceholder-service/posts
+# https://api.toeichust.me/api/jsonplaceholder-service/users
+
+
+
 
