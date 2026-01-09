@@ -95,6 +95,7 @@ services:
       KONGA_SEED_KONG_NODE_DATA_SOURCE_FILE: /app/kongadata/uploads/node.data
 
       DECK_KONG_ADDR: http://kong-gateway:8001
+      DECK_KONG_KEY_AUTH: vuvannghia
 
 
     volumes:

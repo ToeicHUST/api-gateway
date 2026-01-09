@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deck-validate-and-sync:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -17,18 +17,17 @@ jobs:
         with:
           deck-version: "1.55.0"
 
-      - name:  pwd && ls -la 
-        run:  pwd && ls -la 
-
-
       - name: Validate Kong Config
         run: deck gateway validate kong.yaml
 
-        
-#       - name: Diff Kong Config (Pull Request)
-#         if: github.event_name == 'pull_request'
-#         run: deck diff -s kong.yaml --kong-addr ${{ secrets.KONG_ADMIN_ADDR }}
+      - name: Preview Changes (Diff)
+        run: |
+          deck gateway diff kong.yaml \
+            --kong-addr ${{ secrets.DECK_KONG_ADDR }} \
+            --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
 
-#       - name: Sync Kong Config (Merge)
-#         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-#         run: deck sync -s kong.yaml --kong-addr ${{ secrets.KONG_ADMIN_ADDR }}
+      - name: Apply Changes (Sync)
+        run: |
+          deck gateway sync kong.yaml \
+            --kong-addr ${{ secrets.DECK_KONG_ADDR }} \
+            --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
