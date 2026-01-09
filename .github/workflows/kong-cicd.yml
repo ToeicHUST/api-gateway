@@ -22,7 +22,8 @@ jobs:
           deck-version: "1.55.0"
 
       - name: Validate Kong Config
-        run: deck gateway validate kong.yaml
+        run: deck gateway validate kong.yaml \
+            --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
 
       - name: Preview Changes (Diff)
         run: |
