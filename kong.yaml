@@ -15,6 +15,33 @@ plugins:
   - grpcs
   - http
   - https
+- config:
+    content_type: application/json
+    custom_fields_by_lua: null
+    flush_timeout: 0
+    headers:
+      Authorization: Bearer ${{ env "DECK_LOG_SECRET_TOKEN" }}
+    http_endpoint: ${{ env "DECK_LOG_URL" }}
+    keepalive: 60000
+    method: POST
+    queue:
+      initial_retry_delay: 0.01
+      max_batch_size: 1
+      max_bytes: null
+      max_coalescing_delay: 1
+      max_entries: 10000
+      max_retry_delay: 60
+      max_retry_time: 60
+    queue_size: 1
+    retry_count: 10
+    timeout: 1000
+  enabled: true
+  name: http-log
+  protocols:
+  - grpc
+  - grpcs
+  - http
+  - https
 services:
 - connect_timeout: 60000
   enabled: true

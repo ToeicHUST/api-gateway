@@ -4,7 +4,7 @@ from ruamel.yaml.scalarstring import PlainScalarString
 yaml = YAML()
 yaml.preserve_quotes = True 
 
-# Giữ chữ null
+# Hàm giữ chữ null thay vì để trống
 def represent_none(self, data):
     return self.represent_scalar('tag:yaml.org,2002:null', 'null')
 
@@ -16,22 +16,49 @@ try:
     with open(file_path, 'r', encoding='utf-8') as f:
         data = yaml.load(f)
 
-    var_name = "DECK_KONG_KEY_AUTH"
-    
-    # SỬ DỤNG PlainScalarString:
-    # Điều này ngăn ruamel tự động thêm dấu nháy bao quanh hoặc escape dấu ngoặc kép.
-    # Ta dùng f-string với 3 lớp ngoặc nhọn để output ra 2 lớp ngoặc nhọn.
-    env_variable = PlainScalarString(f'${{{{ env "{var_name}" }}}}')
+    # --- Cấu hình các biến môi trường ---
+    var_key_auth = "DECK_KONG_KEY_AUTH"
+    var_log_url = "DECK_LOG_URL"
+    var_log_token = "DECK_LOG_SECRET_TOKEN"
 
+    # Định dạng chuỗi cho decK (sử dụng PlainScalarString để tránh dấu nháy lạ)
+    env_key_auth = PlainScalarString(f'${{{{ env "{var_key_auth}" }}}}')
+    env_log_url  = PlainScalarString(f'${{{{ env "{var_log_url}" }}}}')
+    env_log_token = PlainScalarString(f'Bearer ${{{{ env "{var_log_token}" }}}}')
+
+    # 1. Xử lý Key-Auth cho Consumer
     try:
-        # Giả định cấu trúc của bạn
-        data['consumers'][0]['keyauth_credentials'][0]['key'] = env_variable
-        print(f"Đã gán giá trị: {env_variable}")
-    except (KeyError, IndexError) as e:
-        print(f"Lỗi cấu trúc: {e}")
+        if 'consumers' in data:
+            data['consumers'][0]['keyauth_credentials'][0]['key'] = env_key_auth
+            print(f"✅ Đã gán Key-Auth: {var_key_auth}")
+    except (KeyError, IndexError):
+        print("⚠️ Không tìm thấy cấu trúc keyauth_credentials")
 
+    # 2. Xử lý Log URL và Secret Token trong Plugins
+    found_updates = False
+    if 'plugins' in data:
+        for plugin in data['plugins']:
+            config = plugin.get('config', {})
+            
+            # Cập nhật http_endpoint nếu có
+            if 'http_endpoint' in config:
+                config['http_endpoint'] = env_log_url
+                found_updates = True
+                print(f"✅ Đã gán URL: {var_log_url}")
+            
+            # Cập nhật Authorization trong headers nếu có
+            if 'headers' in config and 'Authorization' in config['headers']:
+                config['headers']['Authorization'] = env_log_token
+                found_updates = True
+                print(f"✅ Đã gán Token: {var_log_token}")
+
+    if not found_updates:
+        print("⚠️ Không tìm thấy vị trí http_endpoint hoặc Authorization để cập nhật.")
+
+    # Ghi lại vào file
     with open(file_path, 'w', encoding='utf-8') as f:
         yaml.dump(data, f)
+    print("--- 🚀 Cập nhật file thành công ---")
 
 except FileNotFoundError:
-    print(f"Không tìm thấy file {file_path}")
+    print(f"❌ Không tìm thấy file {file_path}")

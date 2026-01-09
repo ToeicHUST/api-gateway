@@ -62,11 +62,11 @@ services:
       KONG_ADMIN_LISTEN: 0.0.0.0:8001
       KONG_ADMIN_GUI_URL: http://localhost:8002
     ports:
-      - "8000:8000"   # Kong Proxy
-      - "8443:8443"   # Kong Proxy SSL
-      - "8001:8001"   # Kong Admin API
-      - "8444:8444"   # Kong Admin API SSL
-      - "8002:8002"   # Kong Manager
+      - "8000:8000" # Kong Proxy
+      - "8443:8443" # Kong Proxy SSL
+      - "8001:8001" # Kong Admin API
+      - "8444:8444" # Kong Admin API SSL
+      - "8002:8002" # Kong Manager
 
   kong-manager:
     build: "./manager"
@@ -90,13 +90,15 @@ services:
       KONG_MANAGER_AUTH_USERNAME: vuvannghia.work@gmail.com
       KONG_MANAGER_AUTH_PASSWORD: vuvannghia.work@gmail.com
 
-
       KONGA_SEED_USER_DATA_SOURCE_FILE: /app/kongadata/uploads/user.data
       KONGA_SEED_KONG_NODE_DATA_SOURCE_FILE: /app/kongadata/uploads/node.data
 
       DECK_KONG_ADDR: http://kong-gateway:8001
       DECK_KONG_KEY_AUTH: vuvannghia
 
+      # https://webhook.site/#!/view/82d86c80-19a2-46a1-a07d-e3188443710b/a4bff769-2036-4681-8717-80eed6edf701/1
+      DECK_LOG_URL: https://webhook.site/82d86c80-19a2-46a1-a07d-e3188443710b
+      DECK_LOG_SECRET_TOKEN: vuvannghia
 
     volumes:
       - "./manager/data/user.data:/app/kongadata/uploads/user.data"
