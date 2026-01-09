@@ -8,6 +8,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      DECK_KONG_ADDR: ${{ secrets.DECK_KONG_ADDR }}
+      DECK_KONG_KEY_AUTH: ${{ secrets.DECK_KONG_KEY_AUTH }}
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -23,11 +27,9 @@ jobs:
       - name: Preview Changes (Diff)
         run: |
           deck gateway diff kong.yaml \
-            --kong-addr ${{ secrets.DECK_KONG_ADDR }} \
             --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
 
       - name: Apply Changes (Sync)
         run: |
           deck gateway sync kong.yaml \
-            --kong-addr ${{ secrets.DECK_KONG_ADDR }} \
             --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
