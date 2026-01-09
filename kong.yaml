@@ -3,6 +3,18 @@ consumers:
 - keyauth_credentials:
   - key: ${{ env "DECK_KONG_KEY_AUTH" }}
   username: kong-api-gateway
+plugins:
+- config:
+    allow: []
+    deny:
+    - Assetnote,python-httpx,CMS-Checker
+  enabled: true
+  name: bot-detection
+  protocols:
+  - grpc
+  - grpcs
+  - http
+  - https
 services:
 - connect_timeout: 60000
   enabled: true

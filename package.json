@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "kong-reset": "sh scripts/kong-reset.sh",
+    "kong-restore": "sh scripts/kong-restore.sh",
+    "kong-credentials": "python scripts/kong-credentials.py",
     "kong-import": "sh scripts/kong-import.sh",
-    "kong-export": "sh scripts/kong-export.sh",
-    "kong-credentials": "python scripts/kong-credentials.py"
+    "kong-export": "sh scripts/kong-export.sh"
   },
   "keywords": [],
   "author": "",
