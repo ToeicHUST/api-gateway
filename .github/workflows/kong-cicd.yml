@@ -22,15 +22,12 @@ jobs:
           deck-version: "1.55.0"
 
       - name: Validate Kong Config
-        run: deck gateway validate kong.yaml \
-            --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
+        run: deck gateway validate kong.yaml --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
 
       - name: Preview Changes (Diff)
         run: |
-          deck gateway diff kong.yaml \
-            --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
+          deck gateway diff kong.yaml --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
 
       - name: Apply Changes (Sync)
         run: |
-          deck gateway sync kong.yaml \
-            --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
+          deck gateway sync kong.yaml --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
