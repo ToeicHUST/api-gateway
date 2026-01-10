@@ -45,18 +45,18 @@ plugins:
 services:
 - connect_timeout: 60000
   enabled: true
-  host: jsonplaceholder-service-upstream
-  name: jsonplaceholder-service
+  host: httpbin-upstream
+  name: httpbin
   port: 80
   protocol: http
   read_timeout: 60000
   retries: 5
   routes:
   - https_redirect_status_code: 426
-    name: jsonplaceholder-service_route
+    name: httpbin_route
     path_handling: v0
     paths:
-    - /api/jsonplaceholder-service
+    - /api/httpbin
     preserve_host: false
     protocols:
     - http
@@ -64,7 +64,7 @@ services:
     regex_priority: 0
     request_buffering: true
     response_buffering: true
-    strip_path: false
+    strip_path: true
   write_timeout: 60000
 - connect_timeout: 60000
   enabled: true
@@ -171,9 +171,9 @@ upstreams:
         tcp_failures: 0
         timeouts: 0
     threshold: 0
-  name: jsonplaceholder-service-upstream
+  name: httpbin-upstream
   slots: 10000
   targets:
-  - target: jsonplaceholder.typicode.com:80
+  - target: httpbin.org:80
     weight: 50
   use_srv_name: false
