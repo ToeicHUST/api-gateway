@@ -7,9 +7,22 @@ plugins:
 - config:
     allow: []
     deny:
-    - Assetnote,python-httpx,CMS-Checker
+    - Assetnote
+    - python-httpx
+    - CMS-Checker
   enabled: true
   name: bot-detection
+  protocols:
+  - grpc
+  - grpcs
+  - http
+  - https
+- config:
+    echo_downstream: true
+    generator: uuid#counter
+    header_name: request-id
+  enabled: true
+  name: correlation-id
   protocols:
   - grpc
   - grpcs
@@ -175,5 +188,5 @@ upstreams:
   slots: 10000
   targets:
   - target: httpbin.org:80
-    weight: 50
+    weight: 1
   use_srv_name: false

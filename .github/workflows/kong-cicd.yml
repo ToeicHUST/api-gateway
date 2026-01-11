@@ -8,11 +8,16 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     env:
       DECK_KONG_ADDR: ${{ secrets.DECK_KONG_ADDR }}
       DECK_KONG_KEY_AUTH: ${{ secrets.DECK_KONG_KEY_AUTH }}
       DECK_LOG_URL: ${{ secrets.DECK_LOG_URL }}
       DECK_LOG_SECRET_TOKEN: ${{ secrets.DECK_LOG_SECRET_TOKEN }}
+
+    defaults:
+      run:
+        working-directory: ./code/dev
 
     steps:
       - name: Checkout Code
