@@ -33,7 +33,7 @@ def main():
     print(f"2. >>> Creating target: {target_addr}...")
     res_t = requests.post(
         f"{base_url}/upstreams/{upstream_name}/targets",
-        data={"target": target_addr, "weight": 50}
+        data={"target": target_addr, "weight": 1}
     )
     print(f"   Status: {res_t.status_code}")
 

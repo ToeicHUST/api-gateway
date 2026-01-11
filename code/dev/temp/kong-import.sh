@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # 1. Khai báo biến
 FILE="kong.yaml"

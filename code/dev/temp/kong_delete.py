@@ -13,6 +13,11 @@ SERVICE_HOST = "jsonplaceholder.typicode.com"
 SERVICE_PORT = "80"
 
 
+SERVICE_NAME = "httpbin"
+SERVICE_HOST = "httpbin.org"
+SERVICE_PORT = "80"
+
+
 def main():
 
     # Các biến phụ trợ tự động suy ra
