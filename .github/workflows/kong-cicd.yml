@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-
     paths:
       - "code/dev/config/kong.yaml"
 
@@ -30,6 +29,10 @@ jobs:
         uses: kong/setup-deck@v1
         with:
           deck-version: "1.55.0"
+
+      - name: Warm up Kong API Gateway
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" ${{ secrets.DECK_KONG_ADDR }} --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
 
       - name: Validate Kong Config
         run: deck gateway validate kong.yaml --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
