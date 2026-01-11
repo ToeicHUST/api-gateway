@@ -32,7 +32,7 @@ jobs:
 
       - name: Warm up Kong API Gateway
         run: |
-          curl -s -o /dev/null -w "%{http_code}" ${{ secrets.DECK_KONG_ADDR }} --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
+          curl -s -o /dev/null -w "%{http_code}" ${{ secrets.DECK_KONG_ADDR }} -H "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
 
       - name: Validate Kong Config
         run: deck gateway validate kong.yaml --headers "apikey:${{ secrets.DECK_KONG_KEY_AUTH }}"
