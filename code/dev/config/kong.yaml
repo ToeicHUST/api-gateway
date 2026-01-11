@@ -29,27 +29,32 @@ plugins:
   - http
   - https
 - config:
-    content_type: application/json
-    custom_fields_by_lua: null
-    flush_timeout: 0
-    headers:
-      Authorization: Bearer ${{ env "DECK_LOG_SECRET_TOKEN" }}
-    http_endpoint: ${{ env "DECK_LOG_URL" }}
-    keepalive: 60000
-    method: POST
-    queue:
-      initial_retry_delay: 0.01
-      max_batch_size: 1
-      max_bytes: null
-      max_coalescing_delay: 1
-      max_entries: 10000
-      max_retry_delay: 60
-      max_retry_time: 60
-    queue_size: 1
-    retry_count: 10
-    timeout: 1000
+    day: null
+    error_code: 429
+    error_message: API rate limit exceeded
+    fault_tolerant: true
+    header_name: null
+    hide_client_headers: false
+    hour: null
+    limit_by: consumer
+    minute: 20
+    month: null
+    path: null
+    policy: local
+    redis_database: 0
+    redis_host: null
+    redis_password: null
+    redis_port: 6379
+    redis_server_name: null
+    redis_ssl: false
+    redis_ssl_verify: false
+    redis_timeout: 2000
+    redis_username: null
+    second: null
+    sync_rate: -1
+    year: null
   enabled: true
-  name: http-log
+  name: rate-limiting
   protocols:
   - grpc
   - grpcs
@@ -190,5 +195,3 @@ upstreams:
   - target: httpbin.org:80
     weight: 1
   use_srv_name: false
-
-
