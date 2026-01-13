@@ -1,0 +1,50 @@
+name: Kong Configuration
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "config/kong.yaml"
+
+jobs:
+  deck:
+    runs-on: ubuntu-latest
+
+    env:
+      DECK_KONG_ADDR: ${{ secrets.DECK_KONG_ADDR }}
+      DECK_KONG_KEY_AUTH: ${{ secrets.DECK_KONG_KEY_AUTH }}
+
+      DECK_LOG_URL: ${{ secrets.DECK_LOG_URL }}
+      DECK_LOG_SECRET_TOKEN: ${{ secrets.DECK_LOG_SECRET_TOKEN }}
+
+    defaults:
+      run:
+        working-directory: ./config
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup decK
+        uses: kong/setup-deck@v1
+        with:
+          deck-version: "1.55.0"
+
+      - name: Warm up Kong API Gateway
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" $DECK_KONG_ADDR -H "apikey:$DECK_KONG_KEY_AUTH"
+
+      - name: Validate Kong Config
+        run: deck gateway validate kong.yaml --headers "apikey:$DECK_KONG_KEY_AUTH"
+
+      - name: Preview Changes (Diff)
+        if: github.ref == 'refs/heads/dev'
+        run: |
+          deck gateway diff kong.yaml --headers "apikey:$DECK_KONG_KEY_AUTH"
+
+      - name: Apply Changes (Sync)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          deck gateway sync kong.yaml --headers "apikey:$DECK_KONG_KEY_AUTH"
