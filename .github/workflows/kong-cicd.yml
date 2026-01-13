@@ -9,7 +9,7 @@ on:
       - "config/kong.yaml"
 
 jobs:
-  deploy:
+  deck:
     runs-on: ubuntu-latest
 
     env:
