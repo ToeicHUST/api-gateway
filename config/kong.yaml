@@ -89,6 +89,17 @@ plugins:
   - grpcs
   - http
   - https
+- config:
+    allowed_payload_size: 10
+    require_content_length: true
+    size_unit: megabytes
+  enabled: true
+  name: request-size-limiting
+  protocols:
+  - grpc
+  - grpcs
+  - http
+  - https
 services:
 - connect_timeout: 60000
   enabled: true
