@@ -22,8 +22,8 @@ curl -i -X POST http://localhost:8001/services/kong-api-gateway/plugins \
 # curl -i http://localhost:8000/kong-api-gateway/status
 
 # echo "Gửi giá trị sai"
-# curl -i http://localhost:8000/kong-api-gateway/status   -H "apikey: example"
+# curl -i http://localhost:8000/kong-api-gateway/status -H "apikey: example"
 
 # echo "Gửi giá trị đúng"
-# curl -i http://localhost:8000/kong-api-gateway/status   -H "apikey: vuvannghia"
+# curl -i http://localhost:8000/kong-api-gateway/status -H "apikey: vuvannghia"
 
