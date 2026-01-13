@@ -91,7 +91,7 @@ plugins:
   - https
 - config:
     allowed_payload_size: 10
-    require_content_length: true
+    require_content_length: false
     size_unit: megabytes
   enabled: true
   name: request-size-limiting
