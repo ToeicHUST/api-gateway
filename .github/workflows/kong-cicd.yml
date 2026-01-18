@@ -19,6 +19,8 @@ jobs:
       DECK_LOG_URL: ${{ secrets.DECK_LOG_URL }}
       DECK_LOG_SECRET_TOKEN: ${{ secrets.DECK_LOG_SECRET_TOKEN }}
 
+      DECK_SUPABASE_HOST: ${{ secrets.DECK_SUPABASE_HOST }}
+
     defaults:
       run:
         working-directory: ./config
