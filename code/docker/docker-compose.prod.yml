@@ -1,0 +1,24 @@
+services:
+  kong-gateway:
+    container_name: kong-gateway
+    build: "./api"
+    restart: always
+    env_file:
+      - ".env"
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+      - "8002:8002"
+  kong-manager:
+    container_name: kong-manager
+    build: "./manager"
+    restart: always
+    env_file:
+      - ".env"
+    volumes:
+      - "./manager/data/user.data:/app/kongadata/uploads/user.data"
+      - "./manager/data/node.data:/app/kongadata/uploads/node.data"
+    ports:
+      - "8079:1337"
