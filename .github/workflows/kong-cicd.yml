@@ -47,7 +47,6 @@ jobs:
         run: deck gateway validate kong.yaml --headers "apikey:$DECK_KONG_KEY_AUTH"
 
       - name: Preview Changes (Diff)
-        if: github.ref == 'refs/heads/develop'
         run: |
           deck gateway diff kong.yaml --headers "apikey:$DECK_KONG_KEY_AUTH"
 
