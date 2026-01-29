@@ -1,6 +1,1 @@
-
-
-docker exec -it kong-manager   deck gateway reset --force
-
-
-
+docker exec -it kong-manager deck gateway reset --force
