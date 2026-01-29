@@ -35,7 +35,7 @@ plugins:
     custom_fields_by_lua: null
     flush_timeout: 2
     headers:
-      Authorization: Bearer ${{ env "DECK_LOG_SECRET_TOKEN" }}
+      Authorization: Bearer ${{ env "DECK_LOG_BEARER_TOKEN" }}
     http_endpoint: ${{ env "DECK_LOG_URL" }}
     keepalive: 60000
     method: POST

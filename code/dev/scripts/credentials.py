@@ -19,7 +19,7 @@ try:
     # --- Cấu hình tên biến môi trường (Không chứa giá trị thật) ---
     var_key_auth = "DECK_KONG_KEY_AUTH"
     var_log_url = "DECK_LOG_URL"
-    var_log_token = "DECK_LOG_SECRET_TOKEN"
+    var_log_token = "DECK_LOG_BEARER_TOKEN"
     var_supabase_host = "DECK_SUPABASE_HOST"
 
     # Định dạng chuỗi cho decK

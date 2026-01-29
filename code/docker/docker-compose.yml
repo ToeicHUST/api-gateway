@@ -79,7 +79,7 @@ services:
       DECK_KONG_KEY_AUTH: vuvannghia
 
       DECK_LOG_URL: https://webhook.site/82d86c80-19a2-46a1-a07d-e3188443710b
-      DECK_LOG_SECRET_TOKEN: vuvannghia
+      DECK_LOG_BEARER_TOKEN: vuvannghia
       # https://webhook.site/#!/view/82d86c80-19a2-46a1-a07d-e3188443710b/a4bff769-2036-4681-8717-80eed6edf701/1
 
     volumes:

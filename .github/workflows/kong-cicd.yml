@@ -31,7 +31,7 @@ jobs:
             ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_KONG_ADDR | DECK_KONG_ADDR ;
             ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_KONG_KEY_AUTH | DECK_KONG_KEY_AUTH ;
             ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_LOG_URL | DECK_LOG_URL ;
-            ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_LOG_SECRET_TOKEN | DECK_LOG_SECRET_TOKEN ;
+            ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_LOG_BEARER_TOKEN | DECK_LOG_BEARER_TOKEN ;
             ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_SUPABASE_HOST | DECK_SUPABASE_HOST
 
       - name: Setup decK
