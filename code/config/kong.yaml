@@ -100,6 +100,35 @@ plugins:
   - grpcs
   - http
   - https
+routes:
+- https_redirect_status_code: 426
+  name: block-favicon
+  path_handling: v0
+  paths:
+  - /favicon.ico
+  plugins:
+  - config:
+      body: null
+      content_type: null
+      echo: false
+      message: No favicon
+      status_code: 200
+      trigger: null
+    enabled: true
+    name: request-termination
+    protocols:
+    - grpc
+    - grpcs
+    - http
+    - https
+  preserve_host: false
+  protocols:
+  - http
+  - https
+  regex_priority: 0
+  request_buffering: true
+  response_buffering: true
+  strip_path: true
 services:
 - connect_timeout: 60000
   enabled: true
@@ -259,6 +288,3 @@ upstreams:
   - target: httpbin.org:80
     weight: 1
   use_srv_name: false
-
-
-
