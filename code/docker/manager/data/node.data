@@ -1,0 +1,18 @@
+require('dotenv').config();
+
+
+module.exports = [
+    // {
+    //     "name": "Kong - Prod",
+    //     "type": "key_auth",
+    //     "kong_admin_url": "https://api.toeichust.me/kong-api-gateway",
+    //     "kong_api_key": process.env.DECK_KONG_KEY_AUTH || "defaultpassword",
+    //     "health_checks": false,
+    // },
+    {
+        "name": "Kong - Dev",
+        "type": "default",
+        "kong_admin_url": "http://kong-gateway:8001",
+        "health_checks": false,
+    }
+]

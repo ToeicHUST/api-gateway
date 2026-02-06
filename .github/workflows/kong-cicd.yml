@@ -1,0 +1,58 @@
+name: Kong Configuration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "code/config/kong.yaml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "code/config/kong.yaml"
+
+jobs:
+  deck:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./code/config
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Import Secrets from Vault
+        uses: hashicorp/vault-action@v3
+        with:
+          url: ${{ secrets.VAULT_ADDR }}
+          method: approle
+          roleId: ${{ secrets.VAULT_ROLE_ID_PROD }}
+          secretId: ${{ secrets.VAULT_SECRET_ID_PROD }}
+          secrets: |
+            ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_KONG_ADDR | DECK_KONG_ADDR ;
+            ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_KONG_KEY_AUTH | DECK_KONG_KEY_AUTH ;
+            ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_LOG_URL | DECK_LOG_URL ;
+            ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_LOG_BEARER_TOKEN | DECK_LOG_BEARER_TOKEN ;
+            ${{ secrets.VAULT_DATA_PATH_PROD }} DECK_SUPABASE_HOST | DECK_SUPABASE_HOST
+
+      - name: Setup decK
+        uses: kong/setup-deck@v1
+        with:
+          deck-version: "1.55.0"
+
+      - name: Warm up Kong API Gateway
+        run: |
+          curl -s -o /dev/null -w "%{http_code}" $DECK_KONG_ADDR -H "apikey:$DECK_KONG_KEY_AUTH"
+
+      - name: Validate Kong Config
+        run: deck gateway validate kong.yaml --headers "apikey:$DECK_KONG_KEY_AUTH"
+
+      - name: Preview Changes (Diff)
+        run: |
+          deck gateway diff kong.yaml --headers "apikey:$DECK_KONG_KEY_AUTH"
+
+      - name: Apply Changes (Sync)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          deck gateway sync kong.yaml --headers "apikey:$DECK_KONG_KEY_AUTH"
