@@ -1,0 +1,15 @@
+require('dotenv').config();
+
+
+module.exports = [
+    {
+        "username":  process.env.KONG_MANAGER_AUTH_USERNAME || "admin",
+        "email":  process.env.KONG_MANAGER_AUTH_USERNAME || "admin@admin.admin",
+        "firstName":  process.env.KONG_MANAGER_AUTH_USERNAME || "admin",
+        "lastName":  process.env.KONG_MANAGER_AUTH_USERNAME || "admin",
+        "node_id": "http://kong-gateway:8001",
+        "admin": true,
+        "active" : true,
+        "password": process.env.KONG_MANAGER_AUTH_PASSWORD || "defaultpassword"
+    }
+]

@@ -1,0 +1,7 @@
+services:
+  kong-migration:
+    build: "./api"
+    restart: "no"
+    env_file:
+      - ".env"
+    command: kong migrations bootstrap
